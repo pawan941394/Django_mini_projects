@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+        body {
+            background: #f2f2f2;
+            font-family: 'Open Sans', sans-serif;
+            background: black;
+            color: aquamarine;
+            font-size: 16px;
+        }
+        
+        h2 {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .search {
+            width: 100%;
+            position: relative;
+            display: flex;
+        }
+        
+        .searchTerm {
+            width: 100%;
+            border: 2px solid greenyellow;
+            padding: 11px;
+            height: 20px;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            border-radius: 13px;
+            font-weight: 900;
+            color: black;
+        }
+        
+        .searchTerm:focus {
+            color: #00B4CC;
+        }
+        
+        form {
+            display: flex;
+            margin: auto;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .searchButton {
+            width: 80px;
+            height: 36px;
+            border: 1px solid #00B4CC;
+            background: #00B4CC;
+            text-align: center;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            margin: 34px;
+        }
+        /*Resize the wrap to see the search bar change!*/
+        
+        .wrap {
+            width: 30%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid;
+            padding: 42px;
+            border-radius: 20px;
+        }
+    </style>
+
+    <title>Answer</title>
+</head>
+
+<body>
+    <div class="wrap">
+
+        <h2>Thanks for using our app </h2>
+        <div class="search">
+            <form action="/word">
+                <input type="text" name="search" class="searchTerm" placeholder="Input Your Word Here">
+                <button type="submit" class="searchButton">
+        <i class="fa fa-search"></i>
+     </button>
+            </form>
+        </div>
+
+        <h3>Meaning: {{meaning}}</h3>
+
+        <h3>Synonyms: {% for synonym in synonyms %} {{synonym}}, {% endfor %}</h3>
+
+
+        <h3>Antonyms: {% for antonyms in antonyms %} {{antonyms}}, {% endfor %}</h3>
+
+    </div>
+</body>
+
+</html>

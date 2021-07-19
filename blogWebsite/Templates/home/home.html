@@ -1,0 +1,125 @@
+{% extends 'base.html' %} {% block title %}Home {% endblock title %} {% block homeactive %} active {% endblock homeactive %} {% block body %}
+<style>
+    .product-device {
+        position: absolute;
+        right: 10%;
+        bottom: -30%;
+        width: 300px;
+        height: 540px;
+        background-color: #333;
+        border-radius: 21px;
+        transform: rotate( 30deg);
+    }
+    
+    .product-device::before {
+        position: absolute;
+        top: 10%;
+        right: 10px;
+        bottom: 10%;
+        left: 10px;
+        content: "";
+        background-color: rgba(255, 255, 255, .1);
+        border-radius: 5px;
+    }
+    
+    .product-device-2 {
+        top: -25%;
+        right: auto;
+        bottom: 0;
+        left: 5%;
+        background-color: #e5e5e5;
+    }
+    
+    .fw-normal {
+        font-weight: bolder !important;
+    }
+    
+    .lead {
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+</style>
+<main>
+    <div class="position-relative overflow-hidden p-md-5 text-center bg-light">
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+            <h1 class="fw-normal">Welcome to django blogs</h1>
+            <p class="lead">Here you will be get latest blog information which will be very helpful </p>
+            <a class="btn btn-outline-secondary" href="#">Read more</a>
+        </div>
+        <div class="product-device shadow-sm d-none d-md-block"></div>
+        <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+    </div>
+
+
+
+
+</main>
+<style>
+    .marketing .col-lg-4 {
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+    
+    .marketing h2 {
+        font-weight: 500;
+        font-size: 18px;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        margin-top: 3%;
+    }
+    
+    .marketing {
+        margin-top: 3%;
+    }
+    
+    .marketing h1 {
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        margin-bottom: 4%;
+    }
+    
+    .marketing .col-lg-4 {
+        margin-bottom: 1.5rem;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+    }
+    
+    .marketing img {
+        display: flex;
+        margin: auto;
+        border-radius: 68%;
+        height: 190px;
+        width: 190px;
+    }
+    
+    .marketing .col-lg-4 p {
+        margin-right: .75rem;
+        margin-left: .75rem;
+        margin: .75rem auto;
+    }
+</style>
+<div class="container marketing">
+    <h1>Cheack our latest blogs</h1>
+    <div class="row">
+        {% for post in post %}
+        <div class="col-lg-4">
+            <img class="bd-placeholder-img img-fluid" width="140" height="140" src="{{post.img.url }}">
+            <h2> <a href="/blog/{{post.slug}}/" class="link-info" style="text-decoration: none;"><strong>{{post.title}}</strong></a></h2>
+
+            <h6 style="margin-top: 1vh;"><strong>Post by : </strong>{{post.author}}</h6>
+            <span class="badge bg-success" style="    margin: auto;">Views :  {{post.views }}</span>
+            <p>{{post.desc | safe | truncatechars:100}}</p>
+            <p><a class="btn btn-secondary" href="/blog/{{post.slug}}/">View more »</a></p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock body %}

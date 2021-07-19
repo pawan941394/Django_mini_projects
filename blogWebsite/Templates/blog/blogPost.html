@@ -1,0 +1,95 @@
+{% extends 'base.html' %}{% block title %}BlogPost {% endblock title %} {% block body %}
+
+<style>
+    .desc {
+        flex: 0 0 auto;
+        width: 77%;
+    }
+    
+    .para {
+        font-size: 16px;
+        font-weight: 600;
+    }
+    
+    .img {
+        border-radius: 46px;
+        height: 36vh;
+        width: 35vh;
+    }
+    
+    .com {
+        display: flex;
+        margin: auto;
+        justify-content: center;
+        align-items: center;
+        max-width: 50%;
+    }
+</style>
+<div class="px-4 py-5 my-5 text-center">
+    <img class="img-fluid img" src="{{post.img.url}}" alt="">
+    <h2> <a href="/blog/{{post.slug}}/" class="link-info" style="text-decoration: none;"><strong>{{post.title}}</strong></a></h2>
+    <h6 style="margin-top: 1vh;"><strong>Post by : </strong>{{post.author}}</h6>
+    <span class="badge bg-success" style="    margin: auto;">Views :  {{post.views }}</span>
+    <div class="col-lg-6 mx-auto desc">
+        <p class="lead mb-4 para">{{post.desc |safe}}
+            <br>
+            <strong> Posted on : {{post.timeStamp}}</strong> </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+
+
+        </div>
+    </div>
+</div>
+
+
+<div class="container" style="width: 50%;">
+    <h2> Comments (<b>{{comments.count}}</b>) </h2>
+
+    {% if user.is_authenticated %}
+    <form action="/blog/postComment/" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <input type="text" name="comment" placeholder="Enter comment here" class="form-control">
+            <input type="hidden" name="postSno" value="{{post.key}}">
+
+            <input type="hidden" name="parentSno" value="">
+
+            <div id="emailHelp" class="form-text">Don't share your personal information because this will be shown to everyone .</div>
+
+
+            <button type="submit" class="btn btn-outline-success my-3">Comment</button>
+
+        </div>
+    </form>
+
+    {% else %} Login for posting any comment {% endif %}
+
+
+
+</div>
+{% load humanize %} {% load static %} {% for comment in comments %}
+<div class="row my-3 com">
+    <div class="col-md-1" style="margin-top: 23px;">
+        <img src="/static/img/user.png" alt="" srcset="" style="   
+        max-width: 82px;
+        height: 101px;
+
+        margin-bottom:5px;
+        ">
+    </div>
+    <div class="col-md-11"><b> {{comment.user.username}} </b>
+
+        <span class="badge bg-success">  {{comment.timestamp |naturaltime }}</span>
+        <div>
+            {{comment.comment}}
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+{% endfor %} {% endblock body %}

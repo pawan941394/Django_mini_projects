@@ -1,0 +1,77 @@
+{% extends 'base.html' %} {% block title %}BlogHome {% endblock title %} {% block blogactive %} active {% endblock blogactive %} {% block body %}
+
+<style>
+    .marketing .col-lg-4 {
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+    
+    .marketing h2 {
+        font-weight: 500;
+        font-size: 18px;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        margin-top: 3%;
+    }
+    
+    .marketing {
+        margin-top: 3%;
+    }
+    
+    .marketing h1 {
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        margin-bottom: 4%;
+    }
+    
+    .marketing .col-lg-4 {
+        margin-bottom: 1.5rem;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+    }
+    
+    .marketing img {
+        display: flex;
+        margin: auto;
+        border-radius: 68%;
+        height: 190px;
+        width: 190px;
+    }
+    
+    .marketing .col-lg-4 p {
+        margin-right: .75rem;
+        margin-left: .75rem;
+        margin: .75rem auto;
+    }
+</style>
+<div class="container marketing">
+    <h1>Search result</h1>
+
+
+    {% if post|length == 0 %}
+    <p>No Search result for
+        <p> "{{query}}"</p>
+    </p>
+    {% endif %}
+
+    <div class="row">
+        {% for post in post %}
+        <div class="col-lg-4">
+            <img class="bd-placeholder-img img-fluid" width="140" height="140" src="{{post.img.url }}" />
+            <h2><strong>Post by : </strong><br>{{post.author}}</h2>
+            <span class="badge bg-success" style="    margin: auto;">Views :  {{post.views }}</span>
+            <p>{{post.desc | truncatechars:100}}</p>
+            <p><a class="btn btn-secondary" href="/blog/{{post.slug}}/">View more »</a></p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock body %}

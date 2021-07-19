@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>{% block title %} Search result {% endblock title %}</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Coder</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="
+                  nav-link
+                  {%
+                  block
+                  homeactive
+                  %}
+                  {%
+                  endblock
+                  homeactive
+                  %}
+                " aria-current="page" href="/">Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="
+                  nav-link
+                  {%
+                  block
+                  blogactive
+                  %}
+                  {%
+                  endblock
+                  blogactive
+                  %}
+                "
+                aria-current="page"
+                href="/blog"
+                >Blog</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="
+                  nav-link
+                  {%
+                  block
+                  aboutactive
+                  %}
+                  {%
+                  endblock
+                  aboutactive
+                  %}
+                "
+                aria-current="page"
+                href="/about"
+                >About</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="
+                  nav-link
+                  {%
+                  block
+                  contactactive
+                  %}
+                  {%
+                  endblock
+                  contactactive
+                  %}
+                "
+                aria-current="page"
+                href="/contact"
+                >Contact</a
+              >
+            </li>
+          </ul>
+          <form class="d-flex" method="get" action="/search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+              name="name"
+              id="search"
+            />
+            <button class="btn btn-outline-success" type="submit">
+              Search
+            </button>
+          </form>
+
+          {% if user.is_authenticated %}
+
+          <a href="/logout" class="btn btn-danger mx-2 m-2">logout</a> {% else %}
+
+                        <button type="button" class="btn btn-success mx-2 m-2" data-bs-toggle="modal" data-bs-target="#singupModal">
+            Signup
+          </button>
+                        <button type="button" class="btn btn-warning mx-2 m-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+            Login
+          </button> {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="modal" tabindex="-1" id="singupModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Signup Here</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/Signup">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="username" class="form-label">User name</label>
+                            <input type="text" class="form-control" id="username" aria-describedby="username" placeholder="User name" name="username" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="fname" class="form-label">First name</label>
+                            <input type="text" class="form-control" id="fname" aria-describedby="fname" placeholder="First name" name="fname" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="lname" class="form-label">Last name</label>
+                            <input type="text" class="form-control" id="lname" aria-describedby="lname" placeholder="Last name" name="lname" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="text" class="form-control" id="email" aria-describedby="email" placeholder="Email" name="email" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="pass1" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="pass1" name="pass1" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="pass2" class="form-label">Conform Password</label>
+                            <input type="password" class="form-control" id="pass2" name="pass2" required />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="loginModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Login Here</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/login">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="fname" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="uname" aria-describedby="uname" placeholder="Username" name="uname" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="pass" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="pass" placeholder="Enter your password" name="password" />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% for message in messages %}
+
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    {% endfor %} {% block body %} {% endblock body %}
+
+
+    <!-- Footer -->
+    <footer class="bg-dark text-center text-white">
+        <div class="container p-4">
+            <section class="mb-4">
+
+
+                <!-- Instagram -->
+                <a class="btn btn-outline-light btn-floating m-1" href="https://www.instagram.com/pawan941394/" role="button"><i class="fa fa-instagram"></i
+      ></a>
+
+                <!-- Linkedin -->
+                <a class="btn btn-outline-light btn-floating m-1" href="https://www.linkedin.com/in/pawan941394/" role="button"><i class="fa fa-linkedin"></i
+      ></a>
+
+                <!-- Github -->
+                <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/pawan941394" role="button"><i class="fa fa-github"></i
+      ></a>
+            </section>
+
+
+
+        </div>
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2020 Copyright: <a href="https://www.linkedin.com/in/pawan941394/">Pawan kumar </a><br>
+            <a class="text-white" href="https://www.youtube.com/playlist?list=PLu0W_9lII9ah7DDtYtflgwMwpT3xmjXY9">learn all things from code with harry</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+
+</html>
